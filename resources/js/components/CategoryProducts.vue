@@ -28,7 +28,7 @@
             }
         },
         mounted() {
-            console.log(this.$route.params.id);
+            window.events.$on('newproduct', (data) => this.products.push(data));
             this.getCategories();
         },
         methods: {

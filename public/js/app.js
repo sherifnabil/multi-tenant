@@ -5287,15 +5287,20 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.getCategories();
+    window.events.$on('newcategory', function (data) {
+      return _this.categories.push(data);
+    });
   },
   methods: {
     getCategories: function getCategories() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('/all-categories').then(function (_ref) {
         var data = _ref.data;
-        _this.categories = data;
+        _this2.categories = data;
       })["catch"](function (err) {});
     },
     deleteCategory: function deleteCategory(categoryId, index) {
@@ -5306,7 +5311,7 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {});
     },
     confirm: function confirm(categoryId, index) {
-      var _this2 = this;
+      var _this3 = this;
 
       Swal.fire({
         title: 'Do you want to Delete the Category?',
@@ -5314,7 +5319,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Delete'
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this2.deleteCategory(categoryId, index);
+          _this3.deleteCategory(categoryId, index);
 
           Swal.fire('Success!', 'Saved Successfully!', 'success');
         } else if (result.isDenied) {
@@ -5379,11 +5384,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/categories/store', this.fData).then(function (_ref) {
         var data = _ref.data;
         _this.fData.name = '';
-        Swal.fire('Success!', 'Saved Successfully!', 'success'); // this.$emit('newcategory', data)
+        Swal.fire('Success!', 'Saved Successfully!', 'success');
+        window.events.$emit('newcategory', data);
 
-        setTimeout(function () {
-          window.location.href = '/categories';
-        }, 2000);
+        _this.$router.push('/categories');
       })["catch"](function (err) {
         if (err.response.data.message) {
           _this.errMsg = err.response.data.message;
@@ -5435,16 +5439,20 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log(this.$route.params.id);
+    var _this = this;
+
+    window.events.$on('newproduct', function (data) {
+      return _this.products.push(data);
+    });
     this.getCategories();
   },
   methods: {
     getCategories: function getCategories() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('/api/category/' + this.$route.params.id + '/products/').then(function (_ref) {
         var data = _ref.data;
-        _this.products = data;
+        _this2.products = data;
       })["catch"](function (err) {});
     },
     deleteProduct: function deleteProduct(productId, index) {
@@ -5455,7 +5463,7 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {});
     },
     confirm: function confirm(productId, index) {
-      var _this2 = this;
+      var _this3 = this;
 
       Swal.fire({
         title: 'Do you want to Delete the Product?',
@@ -5463,7 +5471,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Delete'
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this2.deleteProduct(productId, index);
+          _this3.deleteProduct(productId, index);
 
           Swal.fire('Success!', 'Saved Successfully!', 'success');
         } else if (result.isDenied) {
@@ -5575,11 +5583,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/category/' + this.$route.params.id + '/products/store', this.fData).then(function (_ref) {
         var data = _ref.data;
         _this.fData.name = '';
-        Swal.fire('Success!', 'Saved Successfully!', 'success'); // this.$emit('newproduct', data)
+        Swal.fire('Success!', 'Saved Successfully!', 'success');
+        window.events.$emit('newproduct', data);
 
-        setTimeout(function () {
-          window.location.href = '/category/' + _this.$route.params.id + '/products';
-        }, 2000);
+        _this.$router.push('/category/' + _this.$route.params.id + '/products');
       })["catch"](function (err) {
         // this.errMsg = err.response.data.message;
         if (err.response.data.errors.name) {
@@ -5632,6 +5639,7 @@ Vue.component('category-form', (__webpack_require__(/*! ./components/CategoryFor
 Vue.component('categories', (__webpack_require__(/*! ./components/Categories.vue */ "./resources/js/components/Categories.vue")["default"]));
 Vue.component('category-products', (__webpack_require__(/*! ./components/CategoryProducts.vue */ "./resources/js/components/CategoryProducts.vue")["default"]));
 Vue.component('category-products', (__webpack_require__(/*! ./components/CategoryProducts.vue */ "./resources/js/components/CategoryProducts.vue")["default"]));
+window.events = new Vue();
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

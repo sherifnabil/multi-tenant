@@ -42,10 +42,8 @@
                 .then(({data}) => {
                     this.fData.name = '';
                     Swal.fire('Success!','Saved Successfully!','success')
-                    // this.$emit('newcategory', data)
-                    setTimeout(() => {
-                        window.location.href = '/categories';
-                    }, 2000)
+                    window.events.$emit('newcategory', data)
+                    this.$router.push('/categories')
                 })
                 .catch(err => {
                     if(err.response.data.message) {

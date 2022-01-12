@@ -25,6 +25,7 @@
         },
         mounted() {
             this.getCategories();
+            window.events.$on('newcategory', (data) => this.categories.push(data));
         },
         methods: {
             getCategories() {

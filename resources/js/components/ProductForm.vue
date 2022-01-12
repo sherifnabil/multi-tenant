@@ -54,10 +54,8 @@
                 .then(({data}) => {
                     this.fData.name = '';
                     Swal.fire('Success!','Saved Successfully!','success')
-                    // this.$emit('newproduct', data)
-                    setTimeout(() => {
-                        window.location.href = '/category/' + this.$route.params.id + '/products';
-                    }, 2000)
+                    window.events.$emit('newproduct', data)
+                    this.$router.push('/category/' + this.$route.params.id + '/products')
                 })
                 .catch(err => {
                     // this.errMsg = err.response.data.message;
