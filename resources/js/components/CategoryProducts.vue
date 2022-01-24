@@ -34,7 +34,11 @@
         methods: {
             getCategories() {
                 axios
-                .get('/api/category/' + this.$route.params.id + '/products/' )
+                .get('/api/category/' + this.$route.params.id + '/products/', {
+                    headers: {
+                        Authorization: userToken
+                    }
+                })
                 .then(({data}) => {
                     this.products = data;
                 })
@@ -46,7 +50,9 @@
                 const self = this;
 
                 axios
-                .post('/api/products/' + productId + '/delete')
+                .post('/api/products/' + productId + '/delete', {
+                    _token
+                })
                 .then(({data}) => {
                     self.products.splice(index, 1);
                 })

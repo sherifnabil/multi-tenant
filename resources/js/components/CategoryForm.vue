@@ -27,7 +27,8 @@
         data() {
             return {
                 fData: {
-                    name: ''
+                    name: '',
+                    _token
                 },
                 errMsg: ''
             }
@@ -38,7 +39,11 @@
         methods: {
             submit() {
                 axios
-                .post('/api/categories/store', this.fData)
+                .post('/api/categories/store', this.fData, {
+                    headers: {
+                        Authorization: userToken
+                    }
+                })
                 .then(({data}) => {
                     this.fData.name = '';
                     Swal.fire('Success!','Saved Successfully!','success')

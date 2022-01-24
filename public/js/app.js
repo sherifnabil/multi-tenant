@@ -5298,14 +5298,22 @@ __webpack_require__.r(__webpack_exports__);
     getCategories: function getCategories() {
       var _this2 = this;
 
-      axios.get('/all-categories').then(function (_ref) {
+      axios.get('/all-categories', {
+        headers: {
+          Authorization: userToken
+        }
+      }).then(function (_ref) {
         var data = _ref.data;
         _this2.categories = data;
       })["catch"](function (err) {});
     },
     deleteCategory: function deleteCategory(categoryId, index) {
       var self = this;
-      axios.post('/api/categories/delete/' + categoryId).then(function (_ref2) {
+      axios.post('/api/categories/delete/' + categoryId, {
+        headers: {
+          Authorization: userToken
+        }
+      }).then(function (_ref2) {
         var data = _ref2.data;
         self.categories.splice(index, 1);
       })["catch"](function (err) {});
@@ -5381,7 +5389,11 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this = this;
 
-      axios.post('/api/categories/store', this.fData).then(function (_ref) {
+      axios.post('/api/categories/store', this.fData, {
+        headers: {
+          Authorization: userToken
+        }
+      }).then(function (_ref) {
         var data = _ref.data;
         _this.fData.name = '';
         Swal.fire('Success!', 'Saved Successfully!', 'success');
@@ -5450,14 +5462,22 @@ __webpack_require__.r(__webpack_exports__);
     getCategories: function getCategories() {
       var _this2 = this;
 
-      axios.get('/api/category/' + this.$route.params.id + '/products/').then(function (_ref) {
+      axios.get('/api/category/' + this.$route.params.id + '/products/', {
+        headers: {
+          Authorization: userToken
+        }
+      }).then(function (_ref) {
         var data = _ref.data;
         _this2.products = data;
       })["catch"](function (err) {});
     },
     deleteProduct: function deleteProduct(productId, index) {
       var self = this;
-      axios.post('/api/products/' + productId + '/delete').then(function (_ref2) {
+      axios.post('/api/products/' + productId + '/delete', {
+        headers: {
+          Authorization: userToken
+        }
+      }).then(function (_ref2) {
         var data = _ref2.data;
         self.products.splice(index, 1);
       })["catch"](function (err) {});
@@ -5580,7 +5600,11 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this = this;
 
-      axios.post('/api/category/' + this.$route.params.id + '/products/store', this.fData).then(function (_ref) {
+      axios.post('/api/category/' + this.$route.params.id + '/products/store', this.fData, {
+        headers: {
+          Authorization: userToken
+        }
+      }).then(function (_ref) {
         var data = _ref.data;
         _this.fData.name = '';
         Swal.fire('Success!', 'Saved Successfully!', 'success');

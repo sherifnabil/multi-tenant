@@ -20,9 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('categories/store', [CategoryController::class, 'store']);
-Route::post('categories/delete/{category}', [CategoryController::class, 'destroy']);
-
-Route::post('category/{id}/products/store', [ProductController::class, 'store']);
-Route::post('products/{id}/delete', [ProductController::class, 'destroy']);
-Route::get('category/{id}/products', [ProductController::class, 'index']);
+// Route::middleware('tenantToken')->group(function () {
+//     Route::post('categories/store', [CategoryController::class, 'store']);
+//     Route::post('categories/delete/{category}', [CategoryController::class, 'destroy']);
+//     Route::post('category/{id}/products/store', [ProductController::class, 'store']);
+//     Route::post('products/{id}/delete', [ProductController::class, 'destroy']);
+//     Route::get('category/{id}/products', [ProductController::class, 'index']);
+// });

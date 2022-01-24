@@ -30,7 +30,11 @@
         methods: {
             getCategories() {
                 axios
-                .get('/all-categories')
+                .get('/all-categories', {
+                    headers: {
+                        Authorization: userToken
+                    }
+                })
                 .then(({data}) => {
                     this.categories = data;
                 })
@@ -42,7 +46,9 @@
                 const self = this;
 
                 axios
-                .post('/api/categories/delete/' + categoryId)
+                .post('/api/categories/delete/' + categoryId, {
+                    _token
+                })
                 .then(({data}) => {
                     self.categories.splice(index, 1);
                 })

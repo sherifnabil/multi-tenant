@@ -39,6 +39,7 @@
                     name: '',
                     price: '',
                     category_id: this.$route.params.id,
+                    _token
                 },
                 errMsg: '',
                 priceErrMsg: ''
@@ -50,7 +51,11 @@
         methods: {
             submit() {
                 axios
-                .post('/api/category/' + this.$route.params.id + '/products/store', this.fData)
+                .post('/api/category/' + this.$route.params.id + '/products/store', this.fData, {
+                    headers: {
+                        Authorization: userToken
+                    }
+                })
                 .then(({data}) => {
                     this.fData.name = '';
                     Swal.fire('Success!','Saved Successfully!','success')

@@ -8,7 +8,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    {{-- @auth --}}
+        <script>
+            var userToken = "{{ auth()->user()->remember_token ?? '' }}"
+            var _token = "{{ csrf_token() }}"
+        </script>
+    {{-- @endauth --}}
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 

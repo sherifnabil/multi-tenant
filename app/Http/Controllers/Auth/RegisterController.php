@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use App\Events\UserWasCreated;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -39,7 +40,13 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'db_name' => $tenantDb,
+            'remember_token' => Str::random(60),
         ]);
+
+        if (!session('auth_user')) {
+            session()->put('tenant_db', $user);
+        }
+
         event(new UserWasCreated($user));
         return $user;
     }

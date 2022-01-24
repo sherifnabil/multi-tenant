@@ -3,13 +3,25 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Category;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
+use PhpParser\ErrorHandler\Collecting;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function __construct()
+    {
+        // logged in user is saved in the session as auth_user or can be saved if use jwt and can be send to verify that user
+        // $this->middleware('tenantToken');
+    }
+
+    public function index(): Collection
     {
         return Category::all();
     }
