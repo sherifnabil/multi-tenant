@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Models\Category;
+use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class ProductController extends Controller
 {
-    public function index($id)
+    public function index($id): Collection
     {
         $products = Product::where('category_id', $id)->get();
         return $products;
@@ -30,7 +32,7 @@ class ProductController extends Controller
         return Product::create($request->all());
     }
 
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $product = Product::findOrFail($id);
         $product->delete();
